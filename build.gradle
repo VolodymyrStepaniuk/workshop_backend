@@ -1,0 +1,6 @@
+// Top level clean task for all included builds
+tasks.register('cleanAll') {
+    group = 'build'
+    description = 'Clean all builds'
+    dependsOn(gradle.includedBuilds*.task(':clean'))
+}

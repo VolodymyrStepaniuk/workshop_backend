@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id("org.springframework.boot") version "3.2.5"
+    id("io.spring.dependency-management") version "1.1.4"
+}
+
+group = 'org.stepaniuk'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url = uri("https://repo.repsy.io/mvn/darkrymit/telegram-bots")
+    }
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.github.darkrymit.telegrambots:telegram-bots-spring-boot-starter-dispatch:1.0.0-SNAPSHOT")
+    implementation("com.github.darkrymit.telegrambots:telegram-bots-micrometer:1.0.0-SNAPSHOT")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+test {
+    useJUnitPlatform()
+}
