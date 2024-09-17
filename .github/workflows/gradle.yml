@@ -9,8 +9,8 @@ on:
   pull_request:
     branches: [ main,develop ]
 jobs:
-  build-central-api:
-    name: Build And Test Central API
+  build-workshop-api:
+    name: Build And Test Workshop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,32 +25,23 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :central-api:build --scan -x :central-api:test
+          arguments: :workshop:build --scan -x :workshop:test
 
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :central-api:test
-
-# Temporarily disabled due to the fact that we spend all of our free resources
-#      - name: Archive test report
-#        uses: actions/upload-artifact@v3
-#        if: success() || failure() # always run even if the previous step fails
-#        with:
-#          name: Test_report_Central_API
-#          path: projects/central-api/build/reports/tests/test/
-#          retention-days: 5
+          arguments: :workshop:test
 
       - name: Report test results
         uses: dorny/test-reporter@v1
         if: success() || failure() # always run even if the previous step fails
         with:
-          name: Test report Central API
-          path: '**/central-api/build/test-results/test/*.xml'
+          name: Test report Workshop
+          path: '**/workshop/build/test-results/test/*.xml'
           reporter: java-junit
 
-  build-central-api-container:
-    name: Build Central API Container
+  build-workshop-container:
+    name: Build Workshop Container
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -63,19 +54,12 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./central-api.Dockerfile
-          tags: central-api:latest
-          outputs: type=docker,dest=/tmp/central-api.tar
+          file: ./workshop.Dockerfile
+          tags: workshop:latest
+          outputs: type=docker,dest=/tmp/workshop.tar
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-# Temporarily disabled due to the fact that we spend all of our free resources
-#      - name: Upload artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: Central_API_Container
-#          path: /tmp/central-api.tar
-#          retention-days: 5
 
   build-telegram-bot:
     name: Build And Test Telegram Bot
@@ -99,15 +83,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: :telegram-bot:test
-
-# Temporarily disabled due to the fact that we spend all of our free resources
-#      - name: Archive test report
-#        uses: actions/upload-artifact@v3
-#        if: success() || failure() # always run even if the previous step fails
-#        with:
-#          name: Test_report_Telegram_Bot
-#          path: projects/telegram-bot/build/reports/tests/test/
-#          retention-days: 5
 
       - name: Report test results
         uses: dorny/test-reporter@v1
