@@ -1,0 +1,138 @@
+name: CI
+permissions:
+  contents: read
+  actions: read
+  checks: write
+on:
+  push:
+    branches: [ main,develop ]
+  pull_request:
+    branches: [ main,develop ]
+jobs:
+  build-central-api:
+    name: Build And Test Central API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :central-api:build --scan -x :central-api:test
+
+      - name: Test with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :central-api:test
+
+# Temporarily disabled due to the fact that we spend all of our free resources
+#      - name: Archive test report
+#        uses: actions/upload-artifact@v3
+#        if: success() || failure() # always run even if the previous step fails
+#        with:
+#          name: Test_report_Central_API
+#          path: projects/central-api/build/reports/tests/test/
+#          retention-days: 5
+
+      - name: Report test results
+        uses: dorny/test-reporter@v1
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          name: Test report Central API
+          path: '**/central-api/build/test-results/test/*.xml'
+          reporter: java-junit
+
+  build-central-api-container:
+    name: Build Central API Container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and export
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./central-api.Dockerfile
+          tags: central-api:latest
+          outputs: type=docker,dest=/tmp/central-api.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+# Temporarily disabled due to the fact that we spend all of our free resources
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: Central_API_Container
+#          path: /tmp/central-api.tar
+#          retention-days: 5
+
+  build-telegram-bot:
+    name: Build And Test Telegram Bot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :telegram-bot:build --scan -x :telegram-bot:test
+
+      - name: Test with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :telegram-bot:test
+
+# Temporarily disabled due to the fact that we spend all of our free resources
+#      - name: Archive test report
+#        uses: actions/upload-artifact@v3
+#        if: success() || failure() # always run even if the previous step fails
+#        with:
+#          name: Test_report_Telegram_Bot
+#          path: projects/telegram-bot/build/reports/tests/test/
+#          retention-days: 5
+
+      - name: Report test results
+        uses: dorny/test-reporter@v1
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          name: Test report Telegram Bot
+          path: '**/telegram-bot/build/test-results/test/*.xml'
+          reporter: java-junit
+
+  build-telegram-bot-container:
+    name: Build Telegram Bot Container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and export
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./telegram-bot.Dockerfile
+          tags: telegram-bot:latest
+          outputs: type=docker,dest=/tmp/telegram-bot.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
