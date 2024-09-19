@@ -7,7 +7,7 @@ body:
       label: What is the improvement or update you wish to see?
       description: 'Example: I would like to see more examples of how to use the `<Some>` feature. Or, the `<Some>` feature docs are missing information.'
     validations:
-      required: true
+      required: false
   - type: textarea
     attributes:
       label: Is there any context that might help us understand?
