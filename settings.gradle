@@ -1,6 +1,6 @@
 rootProject.name = 'workshop-backend'
 
-def projectDirs = ['projects']
+def projectDirs = ['projects', 'libs']
 
 projectDirs.each {
     file(it).eachDir { dir -> includeBuild(dir) }
