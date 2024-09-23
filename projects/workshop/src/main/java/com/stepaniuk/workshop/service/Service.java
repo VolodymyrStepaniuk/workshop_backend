@@ -1,6 +1,8 @@
 package com.stepaniuk.workshop.service;
 
+import com.stepaniuk.workshop.types.service.Price;
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,8 +49,9 @@ public class Service {
     @Column(name = "priority", nullable = false)
     private Integer priority;
 
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Type(JsonType.class)
+    @Column(name = "price", nullable = false, columnDefinition = "jsonb")
+    private Price price;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
