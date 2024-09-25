@@ -24,10 +24,6 @@ import lombok.ToString;
     @Type(
         name = PerItemPrice.TYPE,
         value = PerItemPrice.class
-    ),
-    @Type(
-        name = ComplexTablePrice.TYPE,
-        value = ComplexTablePrice.class
     )
 })
 // @formatter:on
