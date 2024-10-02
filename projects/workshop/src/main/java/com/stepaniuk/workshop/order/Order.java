@@ -37,6 +37,9 @@ public class Order {
     @JoinColumn(name = "status_id")
     private OrderStatus status;
 
+    @Column(name = "appointment_time", nullable = false)
+    private Instant appointmentTime;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
     private Instant createdAt;
