@@ -1,6 +1,5 @@
-package com.stepaniuk.workshop.payload.service;
+package com.stepaniuk.workshop.payload.service.category;
 
-import com.stepaniuk.workshop.types.service.Price;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,14 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-@Relation(collectionRelation = "services", itemRelation = "service")
-public class ServiceResponse extends RepresentationModel<ServiceResponse> {
-
+@Relation(collectionRelation = "serviceCategories", itemRelation = "serviceCategories")
+public class ServiceCategoryResponse extends RepresentationModel<ServiceCategoryResponse> {
     @NotNull
     private Long id;
-
-    @NotNull
-    private Long categoryId;
 
     @NotNull
     private String title;
@@ -37,12 +32,12 @@ public class ServiceResponse extends RepresentationModel<ServiceResponse> {
     @NotNull
     private Integer priority;
 
-    @NotNull
-    private Price price;
+   @NotNull
+    private String urlName;
 
     @NotNull
-    private final Instant createdAt;
+    private Instant createdAt;
 
     @NotNull
-    private final Instant lastModifiedAt;
+    private Instant lastModifiedAt;
 }
