@@ -1,1 +1,73 @@
-spring.application.name=workshop
+server:
+  servlet:
+    contextPath: /v1
+spring:
+  mvc:
+    problem-details:
+      enabled: true
+#  security:
+#    oauth2:
+#      resource-server:
+#        jwt:
+#          public-key-location: classpath:/certs/public.pem
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/workshop-api
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        check_nullability: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    consumer:
+#      group-id: central-api
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring:
+#          json:
+#            trusted:
+#              packages: "*"
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+#auth-server:
+#  rsa-keys:
+#    private-key: classpath:/certs/private.pem
+#    public-key: classpath:/certs/public.pem
+#  client:
+#    postman:
+#      client-id: postman
+#      client-secret: postman-secret
+#      scopes:
+#        - openid
+#      authorization-grant-types:
+#        - client_credentials
+#        - password
+#        - refresh_token
+#        - phone
+#      authorities:
+#        - user_create
+#    telegram-bot:
+#      client-id: telegram-bot
+#      client-secret: telegram-bot-secret
+#      scopes:
+#        - openid
+#      authorization-grant-types:
+#        - client_credentials
+#        - refresh_token
+#        - phone
+#      authorities:
+#        - user_create

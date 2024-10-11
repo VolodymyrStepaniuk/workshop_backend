@@ -30,8 +30,8 @@ repositories {
 dependencies {
 	implementation "com.stepaniuk.workshop:payload"
 	implementation 'com.stepaniuk.workshop:types'
-	// https://mvnrepository.com/artifact/io.hypersistence/hypersistence-utils-hibernate-62
-	implementation group: 'io.hypersistence', name: 'hypersistence-utils-hibernate-62', version: '3.6.0'
+	// https://mvnrepository.com/artifact/io.hypersistence/hypersistence-utils-hibernate-63
+	implementation group: 'io.hypersistence', name: 'hypersistence-utils-hibernate-63', version: '3.8.2'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
@@ -54,7 +54,6 @@ dependencies {
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:kafka'
 	testImplementation 'org.testcontainers:postgresql'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {

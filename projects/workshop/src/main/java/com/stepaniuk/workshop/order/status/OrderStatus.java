@@ -1,4 +1,4 @@
-package com.stepaniuk.workshop.order;
+package com.stepaniuk.workshop.order.status;
 
 import com.stepaniuk.workshop.types.order.OrderStatusName;
 import jakarta.persistence.*;
