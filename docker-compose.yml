@@ -35,7 +35,7 @@ services:
       TELEGRAM_NOTIFICATION_PRIMARY-CHAT-ID: ${TELEGRAM_NOTIFICATION_PRIMARY_CHAT_ID}
       API_URL: http://workshop-api:8080/v1
     depends_on:
-      - deal-api
+      - workshop-api
       - postgres
       - kafka
     volumes:
@@ -46,7 +46,7 @@ services:
     ports:
       - "5432:5432" # Expose Postgres port
     environment:
-      DEAL_API_DB: deal-api
+      WORKSHOP_API_DB: workshop-api
       TELEGRAM_BOT_DB: telegram-bot
       POSTGRES_USER: postgres_container
       POSTGRES_PASSWORD: admin
@@ -57,7 +57,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     ports:
-      - "5050:80" # Expose pgAdmin port
+      - "6060:80" # Expose pgAdmin port
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@gmail.com
       PGADMIN_DEFAULT_PASSWORD: admin

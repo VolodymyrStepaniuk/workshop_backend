@@ -19,9 +19,6 @@ public class OrderUpdateRequest {
     private OrderStatusName status;
 
     @Nullable
-    private String address;
-
-    @Nullable
     private String comment;
 
     @Nullable

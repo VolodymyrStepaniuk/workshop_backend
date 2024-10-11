@@ -1,6 +1,7 @@
 package com.stepaniuk.workshop.payload.order;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.stepaniuk.workshop.payload.feedback.FeedbackResponse;
 import com.stepaniuk.workshop.types.order.OrderStatusName;
 import com.stepaniuk.workshop.types.order.PriceProperties;
 import com.stepaniuk.workshop.types.service.Price;
@@ -47,6 +48,9 @@ public class OrderResponse extends RepresentationModel<OrderResponse> {
 
     @NotNull
     private final Instant lastModifiedAt;
+
+    @Nullable
+    private final FeedbackResponse feedback;
 
     @Getter
     @AllArgsConstructor

@@ -1,5 +1,6 @@
 package com.stepaniuk.workshop.order;
 
+import com.stepaniuk.workshop.order.status.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,6 +42,9 @@ public class Order {
 
     @Column(name = "appointment_time", nullable = false)
     private Instant appointmentTime;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
@@ -71,6 +77,7 @@ public class Order {
                 "customerId = " + customerId + ", " +
                 "comment = " + comment + ", " +
                 "status = " + status + ", " +
+                "appointmentTime = " + appointmentTime + ", " +
                 "createdAt = " + createdAt + ", " +
                 "lastModifiedAt = " + lastModifiedAt + ")";
     }
